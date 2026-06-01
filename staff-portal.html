@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Project - Staff Portal</title>
+    <style>
+        /* Shared Core Styling */
+        :root {
+            --primary: #9d0a4e;
+            --secondary: #e61f72;
+            --light-pink: #fff0f5;
+            --dark: #331021;
+            --gray: #ccc;
+            --success: #28a745;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #fafafa; color: #333; }
+        nav { background: var(--dark); padding: 1rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--secondary); }
+        
+        section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        h2 { color: var(--primary); text-align: center; margin-bottom: 20px; }
+        
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        
+        /* Login Screen Specifics */
+        #login-section { max-width: 400px; margin: 80px auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--dark); }
+        input, select { width: 100%; padding: 10px; border: 1px solid var(--gray); border-radius: 4px; box-sizing: border-box; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 20px; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; width: 100%; transition: 0.3s; }
+        button:hover { background: var(--secondary); }
+        
+        .error-msg { color: #dc3545; font-size: 0.9rem; text-align: center; margin-top: 10px; display: none; font-weight: bold; }
+
+        /* Dashboard Specifics (Hidden by default) */
+        #dashboard-section { display: none; }
+        
+        /* Data Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: var(--primary); color: white; }
+        tr:hover { background-color: var(--light-pink); }
+        
+        .status-select { padding: 5px; border-radius: 4px; border: 1px solid var(--gray); background: white; font-size: 0.85rem; }
+        .btn-update { background: var(--dark); padding: 6px 12px; font-size: 0.8rem; width: auto; margin-top: 5px; }
+        .btn-update:hover { background: var(--success); }
+
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gray); padding-bottom: 10px; margin-bottom: 20px; }
+        .dashboard-header button { width: auto; background: var(--dark); }
+    </style>
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Party Services</a>
+        <a href="packages.html">Party Package</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+        <a href="staff-portal.html" style="background: var(--primary);">Staff Portal</a>
+    </nav>
+
+    <!-- 1. STAFF LOGIN GATEWAY -->
+    <section id="login-section">
+        <div class="card">
+            <h2>Staff Portal Login</h2>
+            <p style="text-align: center; color: #666; font-size: 0.9rem;">Authorized Personnel Only</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminPassword">Master Password</label>
+                    <input type="password" id="adminPassword" required placeholder="Enter password...">
+                </div>
+                <button type="submit">Access Dashboard</button>
+                <div id="loginError" class="error-msg">Incorrect password. Access denied.</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 2. SECURE STAFF DASHBOARD -->
+    <section id="dashboard-section">
+        <div class="card">
+            <div class="dashboard-header">
+                <h2 style="margin: 0; border: none;">Booking Management Queue</h2>
+                <button id="logoutBtn">Secure Logout</button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table id="bookingsTable">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer Name</th>
+                            <th>Event Date</th>
+                            <th>Theme/Details</th>
+                            <th>Current Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center;">Loading secure data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Firebase Integration & Security Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Your Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlP1lJiRv000FHhdPEwpl1VHYn5HAfwIc",
+            authDomain: "rose-project-b7c16.firebaseapp.com",
+            databaseURL: "https://rose-project-b7c16-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "rose-project-b7c16",
+            storageBucket: "rose-project-b7c16.firebasestorage.app",
+            messagingSenderId: "382494792670",
+            appId: "1:382494792670:web:bae68386b7a171f9efdb4f",
+            measurementId: "G-H3TH5SR4H3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // UI Elements
+        const loginSection = document.getElementById('login-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const bookingsBody = document.getElementById('bookingsBody');
+
+        // --- AUTHENTICATION LOGIC ---
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const pwd = document.getElementById('adminPassword').value;
+            
+            // Prototype Password Check
+            if(pwd === 'admin123') {
+                loginSection.style.display = 'none';
+                dashboardSection.style.display = 'block';
+                loginError.style.display = 'none';
+                loadBookings(); // Fetch data only after login
+            } else {
+                loginError.style.display = 'block';
+            }
+        });
+
+        logoutBtn.addEventListener('click', function() {
+            dashboardSection.style.display = 'none';
+            loginSection.style.display = 'block';
+            document.getElementById('adminPassword').value = '';
+            bookingsBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Secure connection closed.</td></tr>';
+        });
+
+        // --- FETCH AND DISPLAY BOOKINGS ---
+        function loadBookings() {
+            const bookingsRef = ref(db, 'bookings');
+            
+            onValue(bookingsRef, (snapshot) => {
+                bookingsBody.innerHTML = ''; // Clear table
+                const data = snapshot.val();
+
+                if (data) {
+                    // Reverse the entries to show newest first
+                    const entries = Object.entries(data).reverse();
+                    
+                    entries.forEach(([key, booking]) => {
+                        const tr = document.createElement('tr');
+                        
+                        // Map the dropdown to the specific workflow stages in your sitemap
+                        tr.innerHTML = `
+                            <td><strong style="color:var(--primary);">${key.substring(0, 8)}...</strong></td>
+                            <td>${booking.customerName}</td>
+                            <td>${booking.date}</td>
+                            <td>${booking.themes || 'None provided'}</td>
+                            <td>
+                                <select class="status-select" id="status-${key}">
+                                    <option value="Submitted" ${booking.status === 'Submitted' ? 'selected' : ''}>Submitted</option>
+                                    <option value="Under Review" ${booking.status === 'Under Review' ? 'selected' : ''}>Under Review</option>
+                                    <option value="For Scheduling" ${booking.status === 'For Scheduling' ? 'selected' : ''}>For Scheduling</option>
+                                    <option value="Confirmed / Approved" ${booking.status === 'Confirmed / Approved' ? 'selected' : ''}>Confirmed / Approved</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="btn-update" onclick="updateBookingStatus('${key}')">Save Status</button>
+                            </td>
+                        `;
+                        bookingsBody.appendChild(tr);
+                    });
+                } else {
+                    bookingsBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No bookings found in the queue.</td></tr>';
+                }
+            });
+        }
+
+        // --- UPDATE STATUS LOGIC ---
+        // Expose function to global window scope so inline onclick handles can find it
+        window.updateBookingStatus = function(bookingId) {
+            const newStatus = document.getElementById(`status-${bookingId}`).value;
+            const bookingRef = ref(db, `bookings/${bookingId}`);
+            
+            update(bookingRef, { status: newStatus })
+                .then(() => {
+                    alert("Status successfully updated to: " + newStatus);
+                })
+                .catch((error) => {
+                    alert("Error updating status: " + error.message);
+                });
+        };
+    </script>
+</body>
+</html>

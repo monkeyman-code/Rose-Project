@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Project - Booking & Tracking</title>
+    <style>
+        :root {
+            --primary: #9d0a4e;
+            --secondary: #e61f72;
+            --light-pink: #fff0f5;
+            --dark: #331021;
+            --gray: #ccc;
+            --success: #28a745;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #fafafa; color: #333; }
+        nav { background: var(--dark); padding: 1rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--secondary); }
+        
+        section { padding: 40px 20px; max-width: 800px; margin: 0 auto; }
+        h2 { color: var(--primary); text-align: center; margin-bottom: 30px; }
+        
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        
+        /* Form Styling */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--dark); }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--gray); border-radius: 4px; box-sizing: border-box; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 20px; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; width: 100%; transition: 0.3s; }
+        button:hover { background: var(--secondary); }
+        
+        /* Booking Status Timeline Visuals */
+        .status-container { display: flex; justify-content: space-between; margin-top: 40px; position: relative; }
+        .status-container::before { content: ''; position: absolute; top: 15px; left: 0; width: 100%; height: 4px; background: var(--gray); z-index: 1; }
+        .status-step { position: relative; z-index: 2; text-align: center; flex: 1; font-size: 0.85rem; color: #777; }
+        .status-step .dot { width: 32px; height: 32px; background: var(--gray); border-radius: 50%; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.9rem; }
+        
+        /* Active & Completed Timeline States */
+        .status-step.active { color: var(--secondary); font-weight: bold; }
+        .status-step.active .dot { background: var(--secondary); box-shadow: 0 0 10px var(--secondary); }
+        .status-step.completed { color: var(--primary); }
+        .status-step.completed .dot { background: var(--primary); }
+
+        .alert { padding: 15px; border-radius: 4px; margin-top: 15px; display: none; text-align: center; font-weight: bold; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        
+        .flex-group { display: flex; gap: 15px; }
+        .flex-group .form-group { flex: 1; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Party Services</a>
+        <a href="packages.html">Party Package</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html" style="background: var(--primary);">Booking</a>
+        <a href="contact.html">Contact</a>
+        <a href="staff-portal.html">Staff Portal</a>
+    </nav>
+
+    <section id="booking-section">
+        <div class="card">
+            <h2>Online Booking</h2>
+            <form id="bookingForm">
+                <div class="flex-group">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="john@example.com">
+                    </div>
+                </div>
+
+                <div class="flex-group">
+                    <div class="form-group">
+                        <label for="eventDate">Advance Booking Date</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentOption">Payment Option</label>
+                        <select id="paymentOption" required>
+                            <option value="">Select Option</option>
+                            <option value="GCash">GCash</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Cash Deposit">Cash (Downpayment)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="themeIdeas">Theme Ideas & Special Requests</label>
+                    <textarea id="themeIdeas" rows="3" placeholder="e.g., Pastel Pink Kids Birthday Handa setup, specific decorations..."></textarea>
+                </div>
+
+                <button type="submit">Submit Booking Request</button>
+            </form>
+
+            <div id="successAlert" class="alert alert-success"></div>
+        </div>
+    </section>
+
+    <section id="tracker-section">
+        <div class="card">
+            <h2>Track Your Booking Status</h2>
+            <p style="text-align: center; color: #666;">Enter your unique Booking ID to check your live schedule status.</p>
+            
+            <div class="form-group" style="display: flex; gap: 10px;">
+                <input type="text" id="trackingIdInput" placeholder="e.g., -Nxyz1234898faf">
+                <button id="trackBtn" style="width: auto; padding: 0 30px;">Track</button>
+            </div>
+
+            <div id="trackerAlert" class="alert alert-info"></div>
+
+            <div class="status-container" id="statusTimeline" style="display: none;">
+                <div class="status-step" id="step-submitted">
+                    <div class="dot">1</div>
+                    Submitted
+                </div>
+                <div class="status-step" id="step-review">
+                    <div class="dot">2</div>
+                    Under Review
+                </div>
+                <div class="status-step" id="step-scheduling">
+                    <div class="dot">3</div>
+                    For Scheduling
+                </div>
+                <div class="status-step" id="step-confirmed">
+                    <div class="dot">4</div>
+                    Confirmed / Approved
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Your Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlP1lJiRv000FHhdPEwpl1VHYn5HAfwIc",
+            authDomain: "rose-project-b7c16.firebaseapp.com",
+            databaseURL: "https://rose-project-b7c16-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "rose-project-b7c16",
+            storageBucket: "rose-project-b7c16.firebasestorage.app",
+            messagingSenderId: "382494792670",
+            appId: "1:382494792670:web:bae68386b7a171f9efdb4f",
+            measurementId: "G-H3TH5SR4H3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // --- SUBMIT BOOKING HANDLER ---
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const paymentOption = document.getElementById('paymentOption').value;
+            const themeIdeas = document.getElementById('themeIdeas').value;
+
+            // Generate a node inside 'bookings'
+            const bookingsRef = ref(db, 'bookings');
+            const newBookingRef = push(bookingsRef);
+            const bookingId = newBookingRef.key; // Unique Auto-generated ID
+
+            const bookingData = {
+                id: bookingId,
+                customerName: fullName,
+                email: email,
+                date: eventDate,
+                payment: paymentOption,
+                themes: themeIdeas,
+                status: "Submitted", // Starting status based on sitemap workflow
+                timestamp: Date.now()
+            };
+
+            set(newBookingRef, bookingData)
+                .then(() => {
+                    const successAlert = document.getElementById('successAlert');
+                    successAlert.style.display = 'block';
+                    successAlert.innerHTML = `🎉 Booking Submitted Successfully!<br><br><strong>Save Your Booking ID:</strong> <span style="color:var(--primary); font-size:1.1rem;">${bookingId}</span><br><br>Use this ID below to track your approval workflow.`;
+                    document.getElementById('bookingForm').reset();
+                })
+                .catch((error) => {
+                    alert("Error saving booking: " + error.message);
+                });
+        });
+
+        // --- TRACK STATUS HANDLER ---
+        document.getElementById('trackBtn').addEventListener('click', function() {
+            const bookingId = document.getElementById('trackingIdInput').value.trim();
+            const trackerAlert = document.getElementById('trackerAlert');
+            const timeline = document.getElementById('statusTimeline');
+            
+            if(!bookingId) {
+                alert("Please enter a valid Booking ID.");
+                return;
+            }
+
+            const dbRef = ref(db);
+            get(child(dbRef, `bookings/${bookingId}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    trackerAlert.style.display = 'block';
+                    trackerAlert.innerHTML = `<strong>Booking Found!</strong> Client: ${data.customerName} | Event Date: ${data.date}`;
+                    
+                    // Display and reset timeline classes
+                    timeline.style.display = 'flex';
+                    resetTimeline();
+
+                    // Apply visual steps dynamically matching sitemap flow strings
+                    const status = data.status;
+                    if (status === "Submitted") {
+                        setStepActive('step-submitted');
+                    } else if (status === "Under Review") {
+                        setStepCompleted('step-submitted');
+                        setStepActive('step-review');
+                    } else if (status === "For Scheduling") {
+                        setStepCompleted('step-submitted');
+                        setStepCompleted('step-review');
+                        setStepActive('step-scheduling');
+                    } else if (status === "Confirmed / Approved" || status === "Confirmed" || status === "Approved") {
+                        setStepCompleted('step-submitted');
+                        setStepCompleted('step-review');
+                        setStepCompleted('step-scheduling');
+                        setStepActive('step-confirmed');
+                    }
+                } else {
+                    trackerAlert.style.display = 'block';
+                    trackerAlert.className = 'alert';
+                    trackerAlert.style.backgroundColor = '#f8d7da';
+                    trackerAlert.style.color = '#721c24';
+                    trackerAlert.innerHTML = "❌ Booking ID not found. Please verify the ID and try again.";
+                    timeline.style.display = 'none';
+                }
+            }).catch((error) => {
+                console.error(error);
+                alert("Error tracking details.");
+            });
+        });
+
+        function resetTimeline() {
+            const steps = ['step-submitted', 'step-review', 'step-scheduling', 'step-confirmed'];
+            steps.forEach(id => {
+                document.getElementById(id).classList.remove('active', 'completed');
+            });
+        }
+
+        function setStepActive(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function setStepCompleted(id) {
+            document.getElementById(id).classList.add('completed');
+        }
+    </script>
+</body>
+</html>

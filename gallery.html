@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Project - Gallery</title>
+    <style>
+        /* Shared Core Styling */
+        :root {
+            --primary: #9d0a4e;
+            --secondary: #e61f72;
+            --light-pink: #fff0f5;
+            --dark: #331021;
+            --gray: #ccc;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #fafafa; color: #333; line-height: 1.6; }
+        nav { background: var(--dark); padding: 1rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--secondary); }
+        
+        /* Header */
+        .page-header { background: linear-gradient(rgba(157, 10, 78, 0.8), rgba(230, 31, 114, 0.8)), url('https://picsum.photos/1200/400?art') center/cover; color: white; text-align: center; padding: 80px 20px; margin-bottom: 20px; }
+        .page-header h1 { margin: 0; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        
+        section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        
+        /* Filter Controls */
+        .filter-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-btn { background: white; border: 2px solid var(--primary); color: var(--primary); padding: 8px 20px; font-weight: bold; border-radius: 25px; cursor: pointer; transition: 0.3s; }
+        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; }
+
+        /* Responsive Gallery Grid Layout */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .gallery-item { position: relative; border-radius: 8px; overflow: hidden; background: #000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); height: 230px; cursor: pointer; transition: transform 0.3s ease; }
+        .gallery-item:hover { transform: scale(1.03); }
+        
+        /* Video and Image Assets styles */
+        .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; display: block; }
+        .gallery-item:hover img { opacity: 0.8; }
+        
+        /* Item Label Overlay */
+        .item-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(51, 16, 33, 0.9)); color: white; padding: 15px; box-sizing: border-box; transform: translateY(100%); transition: transform 0.3s ease; }
+        .gallery-item:hover .item-overlay { transform: translateY(0); }
+        .item-overlay h4 { margin: 0; font-size: 1.1rem; }
+        .item-overlay span { font-size: 0.8rem; text-transform: uppercase; color: var(--secondary); font-weight: bold; }
+        
+        /* Video Icon Indicator Overlay */
+        .video-indicator { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(157, 10, 78, 0.85); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; pointer-events: none; }
+
+        /* Lightbox Modal Structure */
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 999; display: none; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+        .lightbox-content { max-width: 90%; max-height: 80vh; border-radius: 4px; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 2.5rem; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .lightbox-close:hover { color: var(--secondary); }
+    </style>
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Party Services</a>
+        <a href="packages.html">Party Package</a>
+        <a href="gallery.html" style="background: var(--primary);">Gallery</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+        <a href="staff-portal.html">Staff Portal</a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Our Event Gallery</h1>
+        <p>A look into the smiles, decorations, and setups we've put together.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section>
+        <!-- Filter Bar items derived directly from sitemap subnodes -->
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All Work</button>
+            <button class="filter-btn" data-filter="photo">Photos</button>
+            <button class="filter-btn" data-filter="events">Events</button>
+            <button class="filter-btn" data-filter="videos">Videos</button>
+        </div>
+
+        <!-- Interactive Grid Setup -->
+        <div class="gallery-grid" id="galleryGrid">
+            
+            <!-- Item 1: Photo Layout -->
+            <div class="gallery-item" data-category="photo" data-src="https://picsum.photos/800/600?random=11">
+                <img src="https://picsum.photos/400/300?random=11" alt="Table Arrangement">
+                <div class="item-overlay">
+                    <span>Photo</span>
+                    <h4>Elegant Table Arrangement</h4>
+                </div>
+            </div>
+
+            <!-- Item 2: Events Layout -->
+            <div class="gallery-item" data-category="events" data-src="https://picsum.photos/800/600?random=12">
+                <img src="https://picsum.photos/400/300?random=12" alt="Kids Birthday Stage">
+                <div class="item-overlay">
+                    <span>Events</span>
+                    <h4>Pastel Pink Kids Handa</h4>
+                </div>
+            </div>
+
+            <!-- Item 3: Videos Layout -->
+            <div class="gallery-item" data-category="videos" data-src="https://www.w3schools.com/html/mov_bbb.mp4" data-is-video="true">
+                <video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video>
+                <div class="video-indicator">▶</div>
+                <div class="item-overlay">
+                    <span>Videos</span>
+                    <h4>Sizzle Reel Highlights</h4>
+                </div>
+            </div>
+
+            <!-- Item 4: Photo Layout -->
+            <div class="gallery-item" data-category="photo" data-src="https://picsum.photos/800/600?random=14">
+                <img src="https://picsum.photos/400/300?random=14" alt="Balloon Installation">
+                <div class="item-overlay">
+                    <span>Photo</span>
+                    <h4>Grand Balloon Arch Way</h4>
+                </div>
+            </div>
+
+            <!-- Item 5: Events Layout -->
+            <div class="gallery-item" data-category="events" data-src="https://picsum.photos/800/600?random=15">
+                <img src="https://picsum.photos/400/300?random=15" alt="Outdoor Catering Setup">
+                <div class="item-overlay">
+                    <span>Events</span>
+                    <h4>Outdoor Intimate Catering</h4>
+                </div>
+            </div>
+
+            <!-- Item 6: Videos Layout -->
+            <div class="gallery-item" data-category="videos" data-src="https://www.w3schools.com/html/movie.mp4" data-is-video="true">
+                <video src="https://www.w3schools.com/html/movie.mp4" muted loop></video>
+                <div class="video-indicator">▶</div>
+                <div class="item-overlay">
+                    <span>Videos</span>
+                    <h4>Venue Transformation Setup</h4>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Lightbox Modal View Shell -->
+    <div class="lightbox" id="lightboxModal">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <div id="lightboxMediaContainer"></div>
+    </div>
+
+    <!-- Interface Logic Rules -->
+    <script>
+        // --- MULTI-CATEGORY FILTER ENGINE ---
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Change active state class layout
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                galleryItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // --- POP-UP LIGHTBOX POPULATOR ---
+        const lightboxModal = document.getElementById('lightboxModal');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const mediaContainer = document.getElementById('lightboxMediaContainer');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const src = item.getAttribute('data-src');
+                const isVideo = item.getAttribute('data-is-video') === 'true';
+
+                mediaContainer.innerHTML = ''; // Clean old assets
+
+                if (isVideo) {
+                    mediaContainer.innerHTML = `<video src="${src}" controls autoplay class="lightbox-content"></video>`;
+                } else {
+                    mediaContainer.innerHTML = `<img src="${src}" class="lightbox-content" alt="Enlarged gallery view">`;
+                }
+
+                lightboxModal.style.display = 'flex';
+            });
+        });
+
+        // Close lightbox rules
+        lightboxClose.addEventListener('click', () => {
+            lightboxModal.style.display = 'none';
+            mediaContainer.innerHTML = ''; // Halt resource processes running inside logic loops
+        });
+
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target === lightboxModal) {
+                lightboxModal.style.display = 'none';
+                mediaContainer.innerHTML = '';
+            }
+        });
+    </script>
+</body>
+</html>

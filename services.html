@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Project - Party Services</title>
+    <style>
+        /* Shared Core Styling */
+        :root {
+            --primary: #9d0a4e;
+            --secondary: #e61f72;
+            --light-pink: #fff0f5;
+            --dark: #331021;
+            --gray: #ccc;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #fafafa; color: #333; line-height: 1.6; }
+        nav { background: var(--dark); padding: 1rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--secondary); }
+        
+        /* Header & Typography */
+        .page-header { background: linear-gradient(rgba(157, 10, 78, 0.8), rgba(230, 31, 114, 0.8)), url('https://picsum.photos/1200/400?party') center/cover; color: white; text-align: center; padding: 80px 20px; margin-bottom: 40px; }
+        .page-header h1 { margin: 0; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        
+        section { padding: 40px 20px; max-width: 1000px; margin: 0 auto; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 3px solid var(--secondary); display: inline-block; padding-bottom: 5px; margin-bottom: 40px; }
+        
+        /* Service Block Styling */
+        .service-block { display: flex; align-items: center; gap: 40px; margin-bottom: 60px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-left: 6px solid var(--secondary); }
+        .service-block.reverse { flex-direction: row-reverse; border-left: none; border-right: 6px solid var(--primary); }
+        
+        .service-image { flex: 1; min-width: 300px; }
+        .service-image img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; display: block; }
+        
+        .service-content { flex: 1; padding: 40px; }
+        .service-content h3 { color: var(--dark); font-size: 1.8rem; margin-top: 0; margin-bottom: 15px; }
+        .service-content p { color: #555; margin-bottom: 20px; }
+        .service-content ul { list-style-type: none; padding: 0; }
+        .service-content ul li { margin-bottom: 10px; padding-left: 25px; position: relative; font-weight: bold; color: var(--primary); }
+        .service-content ul li::before { content: '✓'; position: absolute; left: 0; color: var(--secondary); }
+
+        .btn-action { background: var(--primary); color: white; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 4px; display: inline-block; margin-top: 15px; transition: 0.3s; }
+        .btn-action:hover { background: var(--secondary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .service-block, .service-block.reverse { flex-direction: column; border-left: none; border-right: none; border-top: 6px solid var(--secondary); }
+            .service-image { width: 100%; }
+            .service-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html" style="background: var(--primary);">Party Services</a>
+        <a href="packages.html">Party Package</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+        <a href="staff-portal.html">Staff Portal</a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Our Party Services</h1>
+        <p>Everything you need to make your celebration extraordinary.</p>
+    </header>
+
+    <!-- Main Content Area -->
+    <section id="services-list">
+        
+        <!-- Service 1: Kids Birthday Handa -->
+        <div class="service-block">
+            <div class="service-image">
+                <img src="https://picsum.photos/600/400?kids,party" alt="Kids Birthday Handa">
+            </div>
+            <div class="service-content">
+                <h3>Kids Birthday Handa</h3>
+                <p>Give your child a birthday to remember! Our comprehensive "handa" packages take care of the fun, food, and festivities so parents can sit back and enjoy the day.</p>
+                <ul>
+                    <li>Customized themes and character setups</li>
+                    <li>Kid-friendly food carts and candy buffets</li>
+                    <li>Professional party hosts and entertainment</li>
+                    <li>Loot bags and game prizes</li>
+                </ul>
+                <a href="packages.html" class="btn-action">View Packages</a>
+            </div>
+        </div>
+
+        <!-- Service 2: Catering Services -->
+        <div class="service-block reverse">
+            <div class="service-image">
+                <img src="https://picsum.photos/600/400?food,catering" alt="Catering Services">
+            </div>
+            <div class="service-content">
+                <h3>Catering Services</h3>
+                <p>Exceptional food is the heart of any great party. Our culinary team provides a wide array of delicious, freshly prepared dishes that cater to your specific taste and dietary requirements.</p>
+                <ul>
+                    <li>Buffet and plated dining options</li>
+                    <li>Premium Filipino and International cuisines</li>
+                    <li>Elegant table setups and centerpieces</li>
+                    <li>Professional waitstaff and service crew</li>
+                </ul>
+                <a href="booking.html" class="btn-action">Request a Menu</a>
+            </div>
+        </div>
+
+        <!-- Service 3: Decorations -->
+        <div class="service-block">
+            <div class="service-image">
+                <img src="https://picsum.photos/600/400?balloons,decoration" alt="Decorations">
+            </div>
+            <div class="service-content">
+                <h3>Decorations & Styling</h3>
+                <p>Transform any venue into a magical space. Our expert stylists work closely with you to bring your vision to life with stunning backdrops, balloon art, and atmospheric lighting.</p>
+                <ul>
+                    <li>Elaborate balloon arches and installations</li>
+                    <li>Themed photo walls and stage backdrops</li>
+                    <li>Floral arrangements and ceiling drapes</li>
+                    <li>Custom signage and lighting effects</li>
+                </ul>
+                <a href="gallery.html" class="btn-action">See Our Work</a>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Project - Party Packages</title>
+    <style>
+        /* Shared Core Styling */
+        :root {
+            --primary: #9d0a4e;
+            --secondary: #e61f72;
+            --light-pink: #fff0f5;
+            --dark: #331021;
+            --gray: #ccc;
+            --light-gray: #f9f9f9;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: var(--light-gray); color: #333; line-height: 1.6; }
+        nav { background: var(--dark); padding: 1rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--secondary); }
+        
+        /* Header */
+        .page-header { background: linear-gradient(rgba(157, 10, 78, 0.8), rgba(230, 31, 114, 0.8)), url('https://picsum.photos/1200/400?celebration') center/cover; color: white; text-align: center; padding: 80px 20px; margin-bottom: 40px; }
+        .page-header h1 { margin: 0; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .page-header p { font-size: 1.2rem; }
+        
+        section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 3px solid var(--secondary); display: inline-block; padding-bottom: 5px; margin-bottom: 40px; }
+        
+        /* Pricing Cards Grid */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; align-items: stretch; }
+        
+        .pricing-card { background: white; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); overflow: hidden; display: flex; flex-direction: column; text-align: center; transition: transform 0.3s ease; border: 1px solid #eaeaea; }
+        .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(157, 10, 78, 0.15); }
+        
+        /* Highlighted Premium Card */
+        .pricing-card.premium { border: 2px solid var(--primary); transform: scale(1.05); z-index: 1; }
+        .pricing-card.premium:hover { transform: scale(1.05) translateY(-10px); }
+        
+        .card-header { padding: 30px 20px; background: var(--light-pink); border-bottom: 1px solid #eaeaea; }
+        .pricing-card.premium .card-header { background: var(--primary); color: white; }
+        
+        .card-header h3 { margin: 0 0 10px 0; font-size: 1.5rem; }
+        .card-header .price { font-size: 2rem; font-weight: bold; color: var(--secondary); }
+        .pricing-card.premium .card-header .price { color: white; }
+        
+        .card-features { padding: 30px 20px; flex-grow: 1; }
+        .card-features ul { list-style: none; padding: 0; margin: 0; text-align: left; }
+        .card-features ul li { padding: 10px 0; border-bottom: 1px solid #eee; position: relative; padding-left: 30px; color: #555; }
+        .card-features ul li:last-child { border-bottom: none; }
+        .card-features ul li::before { content: '✔'; position: absolute; left: 0; color: var(--success, #28a745); font-weight: bold; }
+        
+        .card-footer { padding: 20px; background: white; border-top: 1px solid #eaeaea; }
+        .btn-select { display: block; width: 100%; padding: 15px 0; background: var(--dark); color: white; text-decoration: none; font-weight: bold; border-radius: 6px; transition: 0.3s; box-sizing: border-box; }
+        .btn-select:hover { background: var(--secondary); }
+        .pricing-card.premium .btn-select { background: var(--secondary); }
+        .pricing-card.premium .btn-select:hover { background: var(--primary); }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .pricing-card.premium { transform: scale(1); z-index: auto; }
+            .pricing-card.premium:hover { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Party Services</a>
+        <a href="packages.html" style="background: var(--primary);">Party Package</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+        <a href="staff-portal.html">Staff Portal</a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Party Packages</h1>
+        <p>Find the perfect fit for your budget and celebration size.</p>
+    </header>
+
+    <!-- Pricing Section -->
+    <section id="packages">
+        <center><h2>Choose Your Package</h2></center>
+        
+        <div class="pricing-grid">
+            
+            <!-- Package 1: Budget Friendly -->
+            <div class="pricing-card">
+                <div class="card-header">
+                    <h3>Budget Friendly</h3>
+                    <div class="price">Inquire for Price</div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">Perfect for intimate gatherings.</p>
+                </div>
+                <div class="card-features">
+                    <ul>
+                        <li>Basic themed backdrop (1 design)</li>
+                        <li>Standard balloon setup (50 pcs)</li>
+                        <li>Catering for up to 30 guests</li>
+                        <li>Basic sound system</li>
+                        <li>1 Professional Party Host</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="booking.html" class="btn-select">Book Budget Package</a>
+                </div>
+            </div>
+
+            <!-- Package 2: Premium (Highlighted) -->
+            <div class="pricing-card premium">
+                <div class="card-header">
+                    <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: bold; color: var(--light-pink);">Most Popular</div>
+                    <h3>Premium Package</h3>
+                    <div class="price">Inquire for Price</div>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">The ultimate stress-free celebration.</p>
+                </div>
+                <div class="card-features">
+                    <ul>
+                        <li>Fully customized grand stage design</li>
+                        <li>Elaborate balloon arches & ceiling drapes</li>
+                        <li>Premium catering buffet for up to 100 guests</li>
+                        <li>Full lighting and professional DJ setup</li>
+                        <li>Party Host, Magician, & Face Painter</li>
+                        <li>Photography & Videography Coverage</li>
+                        <li>Customized loot bags & party favors</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="booking.html" class="btn-select">Book Premium Package</a>
+                </div>
+            </div>
+
+            <!-- Package 3: Basic -->
+            <div class="pricing-card">
+                <div class="card-header">
+                    <h3>Basic Package</h3>
+                    <div class="price">Inquire for Price</div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">Standard setup for medium events.</p>
+                </div>
+                <div class="card-features">
+                    <ul>
+                        <li>Customized standard backdrop</li>
+                        <li>Balloon pillars & table centerpieces</li>
+                        <li>Catering for up to 50 guests</li>
+                        <li>Standard sound & lighting system</li>
+                        <li>Party Host & 1 Entertainment Act</li>
+                        <li>Basic Photography Coverage</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="booking.html" class="btn-select">Book Basic Package</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>

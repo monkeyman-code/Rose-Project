@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Project - Contact Us</title>
+    <style>
+        /* Shared Core Styling */
+        :root {
+            --primary: #9d0a4e;
+            --secondary: #e61f72;
+            --light-pink: #fff0f5;
+            --dark: #331021;
+            --gray: #ccc;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #fafafa; color: #333; line-height: 1.6; }
+        nav { background: var(--dark); padding: 1rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--secondary); }
+        
+        /* Header */
+        .page-header { background: linear-gradient(rgba(157, 10, 78, 0.8), rgba(230, 31, 114, 0.8)), url('https://picsum.photos/1200/400?phone') center/cover; color: white; text-align: center; padding: 80px 20px; margin-bottom: 40px; }
+        .page-header h1 { margin: 0; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        
+        section { padding: 40px 20px; max-width: 1100px; margin: 0 auto; }
+        
+        /* Two Column Layout */
+        .contact-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        
+        /* Form Styling */
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--dark); }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid var(--gray); border-radius: 4px; box-sizing: border-box; font-family: inherit; }
+        textarea { resize: vertical; }
+        button { background: var(--primary); color: white; border: none; padding: 14px 20px; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; width: 100%; transition: 0.3s; }
+        button:hover { background: var(--secondary); }
+        
+        /* Info Details */
+        .info-section h3 { color: var(--primary); margin-top: 0; border-bottom: 2px solid var(--light-pink); padding-bottom: 10px; }
+        .info-link { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; text-decoration: none; color: #555; }
+        .info-link:hover { color: var(--secondary); }
+        .icon-box { background: var(--light-pink); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: bold; font-size: 1.2rem; flex-shrink: 0; }
+        
+        .social-container { display: flex; gap: 15px; margin-top: 15px; }
+        .social-btn { display: inline-block; background: var(--dark); color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.9rem; transition: 0.3s; }
+        .social-btn:hover { background: var(--secondary); }
+
+        .alert { padding: 15px; border-radius: 4px; margin-top: 20px; display: none; text-align: center; font-weight: bold; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+
+        @media (max-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Party Services</a>
+        <a href="packages.html">Party Package</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html" style="background: var(--primary);">Contact</a>
+        <a href="staff-portal.html">Staff Portal</a>
+    </nav>
+
+    <header class="page-header">
+        <h1>Contact Us</h1>
+        <p>Have questions about setups or availability? Get in touch with our team today.</p>
+    </header>
+
+    <section>
+        <div class="contact-grid">
+            
+            <div class="card">
+                <h2 style="color: var(--primary); margin-top: 0; margin-bottom: 25px;">Send Us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="contactName">Your Name</label>
+                        <input type="text" id="contactName" required placeholder="Juan Dela Cruz">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactEmail">Email Address</label>
+                        <input type="email" id="contactEmail" required placeholder="juan@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactSubject">Subject</label>
+                        <input type="text" id="contactSubject" required placeholder="Inquiry about Kids Birthday Packages">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactMessage">Message / Specific Questions</label>
+                        <textarea id="contactMessage" rows="5" required placeholder="Write your message details here..."></textarea>
+                    </div>
+
+                    <button type="submit">Submit Inquiry</button>
+                </form>
+
+                <div id="contactAlert" class="alert"></div>
+            </div>
+
+            <div class="info-section">
+                <div class="card" style="margin-bottom: 30px;">
+                    <h3>Contact Information</h3>
+                    
+                    <a href="tel:+639123456789" class="info-link">
+                        <div class="icon-box">📞</div>
+                        <div>
+                            <strong>Phone Number</strong><br>
+                            +63 912 345 6789
+                        </div>
+                    </a>
+
+                    <a href="mailto:info@roseproject.com" class="info-link">
+                        <div class="icon-box">✉️</div>
+                        <div>
+                            <strong>Email Address</strong><br>
+                            info@roseproject.com
+                        </div>
+                    </a>
+
+                    <div class="info-link" style="cursor: default;">
+                        <div class="icon-box">📍</div>
+                        <div>
+                            <strong>Main Office Location</strong><br>
+                            Manila, Philippines
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Follow Our Updates</h3>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Check out our latest party transformations on social media:</p>
+                    <div class="social-container">
+                        <a href="https://facebook.com" target="_blank" class="social-btn">Facebook</a>
+                        <a href="https://instagram.com" target="_blank" class="social-btn" style="background: var(--secondary);">Instagram</a>
+                        <a href="https://tiktok.com" target="_blank" class="social-btn">TikTok</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Your verified web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlP1lJiRv000FHhdPEwpl1VHYn5HAfwIc",
+            authDomain: "rose-project-b7c16.firebaseapp.com",
+            databaseURL: "https://rose-project-b7c16-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "rose-project-b7c16",
+            storageBucket: "rose-project-b7c16.firebasestorage.app",
+            messagingSenderId: "382494792670",
+            appId: "1:382494792670:web:bae68386b7a171f9efdb4f",
+            measurementId: "G-H3TH5SR4H3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Submit form data into Firebase Database
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+
+            const inquiriesRef = ref(db, 'inquiries');
+            const newInquiryRef = push(inquiriesRef);
+
+            const inquiryData = {
+                name: name,
+                email: email,
+                subject: subject,
+                message: message,
+                timestamp: Date.now()
+            };
+
+            set(newInquiryRef, inquiryData)
+                .then(() => {
+                    const contactAlert = document.getElementById('contactAlert');
+                    contactAlert.style.display = 'block';
+                    contactAlert.innerHTML = "🎉 Thank you! Your message has been saved. Our team will contact you shortly via email.";
+                    document.getElementById('contactForm').reset();
+                })
+                .catch((error) => {
+                    alert("Submission failed: " + error.message);
+                });
+        });
+    </script>
+</body>
+</html>

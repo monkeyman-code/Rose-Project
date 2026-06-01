@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Project - Home</title>
+    <style>
+        /* Basic Styling to Match Your Pink/Burgundy Theme */
+        :root {
+            --primary: #9d0a4e;
+            --secondary: #e61f72;
+            --light-pink: #fff0f5;
+            --dark: #331021;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #fafafa; color: #333; }
+        nav { background: var(--dark); padding: 1rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--secondary); }
+        
+        .hero { background: linear-gradient(rgba(157, 10, 78, 0.7), rgba(51, 16, 33, 0.8)), url('https://picsum.photos/1200/600') center/cover; color: white; text-align: center; padding: 100px 20px; }
+        .btn-book { background: var(--secondary); color: white; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 25px; font-size: 1.2rem; display: inline-block; margin-top: 20px; box-shadow: 0 4px 15px rgba(230, 31, 114, 0.4); }
+        
+        section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 3px solid var(--secondary); display: inline-block; padding-bottom: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); }
+        .gallery-preview img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" style="background: var(--primary);">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Party Services</a>
+        <a href="packages.html">Party Package</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+        <a href="staff-portal.html">Staff Portal</a>
+    </nav>
+
+    <header class="hero">
+        <h1>Making Your Celebrations Unforgettable</h1>
+        <p>From kids' birthdays to premium catering, we handle it all.</p>
+        <a href="booking.html" class="btn-book">Book Now</a>
+    </header>
+
+    <section id="featured-events">
+        <center><h2>Featured Events</h2></center>
+        <div class="grid" id="events-container">
+            <p style="text-align: center; grid-column: 1/-1;">Connecting to live database...</p>
+        </div>
+    </section>
+
+    <section id="gallery-preview" style="background: var(--light-pink);">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+            <h2>Gallery Preview</h2>
+            <div class="grid">
+                <div class="gallery-preview"><img src="https://picsum.photos/400/300?random=1" alt="Event 1"></div>
+                <div class="gallery-preview"><img src="https://picsum.photos/400/300?random=2" alt="Event 2"></div>
+                <div class="gallery-preview"><img src="https://picsum.photos/400/300?random=3" alt="Event 3"></div>
+            </div>
+            <br>
+            <a href="gallery.html" style="color: var(--primary); font-weight: bold;">View All Photos &rarr;</a>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <center><h2>Customer Reviews & Feedback</h2></center>
+        <div class="grid" id="reviews-container">
+            <p style="text-align: center; grid-column: 1/-1;">Loading love from our clients...</p>
+        </div>
+    </section>
+
+    <script type="module">
+        // Import Firebase app and database SDKs from CDN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Your verified web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlP1lJiRv000FHhdPEwpl1VHYn5HAfwIc",
+            authDomain: "rose-project-b7c16.firebaseapp.com",
+            databaseURL: "https://rose-project-b7c16-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "rose-project-b7c16",
+            storageBucket: "rose-project-b7c16.firebasestorage.app",
+            messagingSenderId: "382494792670",
+            appId: "1:382494792670:web:bae68386b7a171f9efdb4f",
+            measurementId: "G-H3TH5SR4H3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+
+        // --- FETCH FEATURED EVENTS FROM FIREBASE ---
+        const eventsRef = ref(db, 'featured_events');
+        onValue(eventsRef, (snapshot) => {
+            const container = document.getElementById('events-container');
+            container.innerHTML = ''; // Clear loader
+            const data = snapshot.val();
+            
+            if (data) {
+                Object.values(data).forEach(event => {
+                    container.innerHTML += `
+                        <div class="card">
+                            <h3>${event.title || 'Special Event'}</h3>
+                            <p>${event.description || 'No description provided.'}</p>
+                        </div>
+                    `;
+                });
+            } else {
+                // Fallback placeholder cards if database is empty right now
+                container.innerHTML = `
+                    <div class="card"><h3>Kids Birthday</h3><p>Fun, themed parties featuring custom setup options.</p></div>
+                    <div class="card"><h3>Catering Services</h3><p>Delicious menus curated perfectly for your guest size.</p></div>
+                    <div class="card"><h3>Grand Weddings</h3><p>Elegant design and seamless coordination options.</p></div>
+                `;
+            }
+        });
+
+        // --- FETCH REVIEWS FROM FIREBASE ---
+        const reviewsRef = ref(db, 'reviews');
+        onValue(reviewsRef, (snapshot) => {
+            const container = document.getElementById('reviews-container');
+            container.innerHTML = ''; // Clear loader
+            const data = snapshot.val();
+
+            if (data) {
+                Object.values(data).forEach(rev => {
+                    container.innerHTML += `
+                        <div class="card" style="border-top-color: var(--secondary);">
+                            <p>"${rev.text}"</p>
+                            <strong>- ${rev.author}</strong>
+                        </div>
+                    `;
+                });
+            } else {
+                // Fallback placeholder reviews
+                container.innerHTML = `
+                    <div class="card" style="border-top-color: var(--secondary);"><p>"The decorations were stunning! Best birthday coordinator ever."</p><strong>- Maria C.</strong></div>
+                    <div class="card" style="border-top-color: var(--secondary);"><p>"Highly recommended. The food arrived hot and tasted amazing."</p><strong>- John D.</strong></div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

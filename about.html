@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Project - About Us</title>
+    <style>
+        /* Shared Core Styling */
+        :root {
+            --primary: #9d0a4e;
+            --secondary: #e61f72;
+            --light-pink: #fff0f5;
+            --dark: #331021;
+            --gray: #ccc;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #fafafa; color: #333; line-height: 1.6; }
+        nav { background: var(--dark); padding: 1rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--secondary); }
+        
+        /* Header & Typography */
+        .page-header { background: linear-gradient(rgba(157, 10, 78, 0.8), rgba(230, 31, 114, 0.8)), url('https://picsum.photos/1200/400?events') center/cover; color: white; text-align: center; padding: 80px 20px; margin-bottom: 40px; }
+        .page-header h1 { margin: 0; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        
+        section { padding: 40px 20px; max-width: 1000px; margin: 0 auto; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 3px solid var(--secondary); display: inline-block; padding-bottom: 5px; margin-bottom: 30px; }
+        
+        /* Profile & Mission Sections */
+        .content-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 40px; border-left: 5px solid var(--primary); }
+        .mission-vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        @media (max-width: 768px) { .mission-vision-grid { grid-template-columns: 1fr; } }
+        
+        blockquote { font-size: 1.1rem; font-style: italic; color: #555; padding-left: 20px; border-left: 4px solid var(--secondary); margin: 20px 0; background: var(--light-pink); padding: 20px; border-radius: 0 8px 8px 0; }
+
+        /* Team Grid */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
+        .team-member { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s ease; border-top: 4px solid var(--secondary); }
+        .team-member:hover { transform: translateY(-5px); }
+        .team-member img { width: 100%; height: 250px; object-fit: cover; border-bottom: 4px solid var(--secondary); }
+        .team-info { padding: 25px 15px; }
+        .team-info h3 { margin: 0 0 5px 0; color: var(--dark); font-size: 1.1rem; }
+        .team-info p { margin: 0; color: var(--secondary); font-weight: bold; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html" style="background: var(--primary);">About Us</a>
+        <a href="services.html">Party Services</a>
+        <a href="packages.html">Party Package</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+        <a href="staff-portal.html">Staff Portal</a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>About Us</h1>
+        <p>Creating unforgettable moments, one celebration at a time.</p>
+    </header>
+
+    <!-- Section 1: Company Profile -->
+    <section id="profile">
+        <center><h2>Company Profile</h2></center>
+        <div class="content-card">
+            <p>Welcome to <strong>The Rose Project</strong>, your premier partner in event planning and party coordination. Established with a passion for bringing joy to life's biggest milestones, we specialize in comprehensive event management—from intimate kids' birthdays and handa setups to large-scale premium gatherings.</p>
+            <p>We pride ourselves on our meticulous attention to detail, highly customizable themes, and robust network of top-tier catering and decoration vendors. Our goal is to handle the stress of planning so you can focus entirely on celebrating with your loved ones.</p>
+        </div>
+    </section>
+
+    <!-- Section 2: Vision / Mission -->
+    <section id="vision-mission" style="background: var(--light-pink); border-radius: 8px;">
+        <center><h2>Vision & Mission</h2></center>
+        <div class="mission-vision-grid">
+            <div>
+                <h3 style="color: var(--dark); text-align: center;">Our Vision</h3>
+                <blockquote>
+                    To be the leading and most trusted event planning service, recognized for transforming ordinary spaces into extraordinary memories and setting the standard for celebration excellence.
+                </blockquote>
+            </div>
+            <div>
+                <h3 style="color: var(--dark); text-align: center;">Our Mission</h3>
+                <blockquote>
+                    To deliver seamless, innovative, and highly personalized party experiences. We are dedicated to providing transparent booking, exceptional customer service, and creative solutions tailored to every client's unique budget and dream.
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Meet the Team / Staff -->
+    <section id="team">
+        <center><h2>Meet the Team</h2></center>
+        <div class="team-grid">
+            <!-- Team Member 1 -->
+            <div class="team-member">
+                <div class="team-info">
+                    <h3>Capalar, Rose Mhine Joy C.</h3>
+                    <p>Team Member</p>
+                </div>
+            </div>
+            
+            <!-- Team Member 2 -->
+            <div class="team-member">
+                <div class="team-info">
+                    <h3>Esguerra, Marc Dustin A.</h3>
+                    <p>Team Member</p>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="team-member">
+                <div class="team-info">
+                    <h3>Noces, Shiela May D.</h3>
+                    <p>Team Member</p>
+                </div>
+            </div>
+
+            <!-- Team Member 4 -->
+            <div class="team-member">
+                <div class="team-info">
+                    <h3>Orot, April Joyce P.</h3>
+                    <p>Team Member</p>
+                </div>
+            </div>
+
+            <!-- Team Member 5 -->
+            <div class="team-member">
+                <div class="team-info">
+                    <h3>Tayo, Jeziel</h3>
+                    <p>Team Member</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
